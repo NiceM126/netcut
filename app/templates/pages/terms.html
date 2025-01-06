@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}服务条款 - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="terms-page">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>服务条款</h1>
+            <p class="subtitle">使用我们的服务即表示您同意以下条款</p>
+            <p class="update-date">最后更新：2025年1月6日</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="terms-content">
+            <div class="section-block">
+                <h2>1. 服务说明</h2>
+                <p>在线剪贴板提供文本分享服务，允许用户创建、分享和访问文本内容。我们保留随时修改、暂停或终止服务的权利。</p>
+            </div>
+
+            <div class="section-block">
+                <h2>2. 用户责任</h2>
+                <p>使用本服务时，您同意：</p>
+                <ul>
+                    <li>不发布任何违法、有害或侵犯他人权利的内容</li>
+                    <li>不使用服务进行垃圾信息传播或骚扰行为</li>
+                    <li>不尝试破坏或干扰服务的正常运行</li>
+                    <li>对您创建和分享的内容负责</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>3. 内容政策</h2>
+                <p>禁止发布以下类型的内容：</p>
+                <ul>
+                    <li>违反法律法规的内容</li>
+                    <li>侵犯知识产权的内容</li>
+                    <li>含有恶意代码的内容</li>
+                    <li>垃圾广告或营销信息</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>4. 服务限制</h2>
+                <p>我们保留以下权利：</p>
+                <ul>
+                    <li>限制单个用户的使用频率</li>
+                    <li>删除违规内容</li>
+                    <li>封禁违规用户</li>
+                    <li>修改服务功能和限制</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>5. 免责声明</h2>
+                <p>我们不对以下情况负责：</p>
+                <ul>
+                    <li>用户发布的内容</li>
+                    <li>服务中断或数据丢失</li>
+                    <li>第三方链接或内容</li>
+                    <li>因使用服务造成的损失</li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>6. 知识产权</h2>
+                <p>服务相关的所有知识产权归我们所有。用户保留其发布内容的权利，但授予我们使用和展示的许可。</p>
+            </div>
+
+            <div class="section-block">
+                <h2>7. 条款变更</h2>
+                <p>我们可能随时修改这些条款。重大变更将通过网站公告通知用户。继续使用服务即表示接受新条款。</p>
+            </div>
+
+            <div class="section-block">
+                <h2>8. 联系我们</h2>
+                <p>如果您对这些条款有任何疑问，请联系我们：</p>
+                <div class="contact-info">
+                    <p>📧 邮箱：xxxxx@gmail.com</p>
+                    <p>📞 电话：400-xxx-xxxx</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.terms-page {
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.update-date {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.terms-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section-block {
+    margin-bottom: 4rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.section-block:last-child {
+    margin-bottom: 0;
+}
+
+.section-block h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.section-block p {
+    color: var(--text-color);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.section-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.section-block li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.section-block li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+.contact-info {
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.contact-info p {
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .content-section {
+        padding: 2rem 1rem;
+    }
+    
+    .section-block {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %} 

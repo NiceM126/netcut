@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}关于我们 - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <div class="container">
+        <h1>关于在线剪贴板</h1>
+        
+        <section class="about-section">
+            <h2>我们的使命</h2>
+            <p>为用户提供一个简单、安全、高效的文本分享平台。无论是代码片段、笔记还是临时文本，都可以轻松地进行分享和存储。</p>
+        </section>
+        
+        <section class="about-section">
+            <h2>主要特点</h2>
+            <ul>
+                <li>🔒 支持密码保护</li>
+                <li>⏰ 自定义过期时间</li>
+                <li>🔥 阅后即焚功能</li>
+                <li>📱 移动端适配</li>
+                <li>🎨 美观的界面设计</li>
+                <li>⚡ 快速的响应速度</li>
+            </ul>
+        </section>
+        
+        <section class="about-section">
+            <h2>技术栈</h2>
+            <ul>
+                <li>后端：Python + Flask</li>
+                <li>数据库：Redis</li>
+                <li>前端：HTML5 + CSS3 + JavaScript</li>
+                <li>部署：Docker + Nginx</li>
+            </ul>
+        </section>
+        
+        <section class="about-section">
+            <h2>联系我们</h2>
+            <p>如果您有任何问题、建议或合作意向，欢迎联系我们：</p>
+            <ul>
+                <li>📧 Email：contact@example.com</li>
+                <li>💬 GitHub：<a href="https://github.com/zxcv0221/netcut" target="_blank">项目仓库</a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.about-page {
+    padding: 2rem 0;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+}
+
+.about-page .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+.about-page h1 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.about-section {
+    margin-bottom: 2rem;
+}
+
+.about-section:last-child {
+    margin-bottom: 0;
+}
+
+.about-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.about-section p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.about-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-section li {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.about-section a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.about-section a:hover {
+    color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .about-page {
+        padding: 1rem;
+    }
+    
+    .about-page .container {
+        padding: 1.5rem;
+    }
+    
+    .about-page h1 {
+        font-size: 1.75rem;
+    }
+    
+    .about-section h2 {
+        font-size: 1.25rem;
+    }
+}
+</style>
+{% endblock %} 

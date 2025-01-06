@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}使用帮助 - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="help-page">
+    <div class="container">
+        <h1>使用帮助</h1>
+        
+        <section class="help-section">
+            <h2>基本使用</h2>
+            <div class="help-item">
+                <h3>1. 创建剪贴板</h3>
+                <ul>
+                    <li>访问首页，直接在文本框中输入或粘贴内容</li>
+                    <li>点击"保存内容"按钮创建剪贴板</li>
+                    <li>系统会自动生成一个唯一的链接</li>
+                </ul>
+            </div>
+            
+            <div class="help-item">
+                <h3>2. 分享链接</h3>
+                <ul>
+                    <li>复制生成的链接分享给他人</li>
+                    <li>接收者可以通过链接直接访问内容</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="help-section">
+            <h2>高级功能</h2>
+            <div class="help-item">
+                <h3>1. 密码保护</h3>
+                <ul>
+                    <li>创建剪贴板时设置访问密码</li>
+                    <li>分享链接时需要同时告知密码</li>
+                    <li>访问者需要输入正确密码才能查看内容</li>
+                </ul>
+            </div>
+            
+            <div class="help-item">
+                <h3>2. 过期时间</h3>
+                <ul>
+                    <li>可选择内容的自动过期时间</li>
+                    <li>支持1小时、1天、7天、30天</li>
+                    <li>过期后内容将自动删除</li>
+                </ul>
+            </div>
+            
+            <div class="help-item">
+                <h3>3. 阅后即焚</h3>
+                <ul>
+                    <li>创建时勾选"阅后即焚"选项</li>
+                    <li>内容被查看后将立即删除</li>
+                    <li>适合一次性的敏感信息传递</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="help-section">
+            <h2>常见问题</h2>
+            <div class="help-item">
+                <h3>Q: 内容会永久保存吗？</h3>
+                <p>A: 不会。所有内容都有过期时间，最长30天。建议及时保存重要内容。</p>
+            </div>
+            
+            <div class="help-item">
+                <h3>Q: 忘记密码怎么办？</h3>
+                <p>A: 密码无法找回。建议重新创建剪贴板并妥善保管密码。</p>
+            </div>
+            
+            <div class="help-item">
+                <h3>Q: 支持哪些内容格式？</h3>
+                <p>A: 支持纯文本内容，包括代码、链接等。暂不支持富文本格式。</p>
+            </div>
+        </section>
+        
+        <section class="help-section">
+            <h2>联系支持</h2>
+            <p>如果您遇到其他问题或需要帮助，请通过以下方式联系我们：</p>
+            <ul>
+                <li>📧 发送邮件至：support@example.com</li>
+                <li>💬 在 GitHub 上提交 Issue</li>
+                <li>📝 查看我们的<a href="/pages/terms">服务条款</a>和<a href="/pages/privacy">隐私政策</a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.help-page {
+    padding: 2rem 0;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+}
+
+.help-page .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+.help-page h1 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.help-section {
+    margin-bottom: 2.5rem;
+}
+
+.help-section:last-child {
+    margin-bottom: 0;
+}
+
+.help-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.help-item {
+    margin-bottom: 1.5rem;
+}
+
+.help-item:last-child {
+    margin-bottom: 0;
+}
+
+.help-item h3 {
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.help-item p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.help-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.help-item li {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.help-item li::before {
+    content: '•';
+    color: var(--primary-color);
+    position: absolute;
+    left: 0.5rem;
+}
+
+.help-section a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.help-section a:hover {
+    color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .help-page {
+        padding: 1rem;
+    }
+    
+    .help-page .container {
+        padding: 1.5rem;
+    }
+    
+    .help-page h1 {
+        font-size: 1.75rem;
+    }
+    
+    .help-section h2 {
+        font-size: 1.25rem;
+    }
+    
+    .help-item h3 {
+        font-size: 1.1rem;
+    }
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}{{ paste.name if paste else paste_name }} - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="edit-header">
+        <div class="header-left">
+            <a href="/" class="home-link">首页</a>
+            <span class="divider">|</span>
+            <span class="paste-url">
+                <span class="url-label">剪贴板地址：</span>
+                <span class="url-value">{{ paste.name if paste else paste_name }}</span>
+                <button id="copyUrlBtn" class="btn-text" title="复制链接">📋</button>
+            </span>
+        </div>
+        <div class="header-right">
+            <button id="saveBtn" class="btn-primary">保存内容</button>
+            <button id="clearBtn" class="btn-secondary">清空内容</button>
+        </div>
+    </div>
+
+    <div class="edit-main">
+        <textarea id="content" 
+                placeholder="在此处粘贴或输入文本内容..."
+                autofocus>{{ paste.content if paste and paste.content else '' }}</textarea>
+    </div>
+
+    <div class="edit-footer">
+        <div class="footer-left">
+            <div class="word-count">
+                <span id="charCount">0</span> 个字符 |
+                <span id="lineCount">0</span> 行
+            </div>
+        </div>
+        <div class="footer-right">
+            <div class="paste-options">
+                <select id="expiration" class="select-style">
+                    <option value="3600">1小时后过期</option>
+                    <option value="86400">1天后过期</option>
+                    <option value="604800" selected>7天后过期</option>
+                    <option value="2592000">30天后过期</option>
+                </select>
+
+                <input type="password" 
+                       id="password" 
+                       class="input-style"
+                       placeholder="设置访问密码"
+                       value="{{ paste.password if paste and paste.password else '' }}">
+
+                <label class="checkbox-label">
+                    <input type="checkbox" 
+                           id="burnAfterRead"
+                           {% if paste and paste.burn_after_read %}checked{% endif %}>
+                    阅后即焚
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast" style="display: none;"></div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 2rem);
+}
+
+.edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.home-link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.divider {
+    color: var(--text-color);
+    opacity: 0.5;
+}
+
+.paste-url {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.url-label {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.url-value {
+    font-family: monospace;
+    color: var(--primary-color);
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    font-size: 1rem;
+}
+
+.edit-main {
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: none;
+}
+
+.edit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--background-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.word-count {
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.paste-options {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.select-style, .input-style {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+}
+
+.btn-primary, .btn-secondary {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .edit-header, .edit-footer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .paste-options {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const content = document.getElementById('content');
+    const saveBtn = document.getElementById('saveBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyUrlBtn = document.getElementById('copyUrlBtn');
+    const charCount = document.getElementById('charCount');
+    const lineCount = document.getElementById('lineCount');
+    const toast = document.getElementById('toast');
+
+    // 显示提示消息
+    function showToast(message, duration = 2000) {
+        toast.textContent = message;
+        toast.style.display = 'block';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, duration);
+    }
+
+    // 更新字数统计
+    function updateCount() {
+        const text = content.value;
+        charCount.textContent = text.length;
+        lineCount.textContent = text.split('\n').length;
+    }
+
+    // 复制URL
+    copyUrlBtn.addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            showToast('链接已复制到剪贴板');
+        });
+    });
+
+    // 清空内容
+    clearBtn.addEventListener('click', function() {
+        if (confirm('确定要清空所有内容吗？')) {
+            content.value = '';
+            updateCount();
+        }
+    });
+
+    // 保存内容
+    saveBtn.addEventListener('click', async function() {
+        if (!content.value.trim()) {
+            showToast('内容不能为空');
+            return;
+        }
+
+        const data = {
+            content: content.value,
+            expiration: parseInt(document.getElementById('expiration').value),
+            password: document.getElementById('password').value,
+            burn_after_read: document.getElementById('burnAfterRead').checked
+        };
+        
+        try {
+            const response = await fetch(window.location.pathname, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                showToast('保存成功！');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                showToast(result.error || '保存失败，请重试');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('发生错误，请重试');
+        }
+    });
+
+    // 监听内容变化
+    content.addEventListener('input', updateCount);
+    
+    // 初始化字数统计
+    updateCount();
+});
+</script>
+{% endblock %} 

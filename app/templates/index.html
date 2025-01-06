@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}在线剪贴板 - 简单、安全的文本分享工具{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero {
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        url('https://cdn.jsdelivr.net/gh/cat-milk/Anime-Girls-Holding-Programming-Books@master/Typescript/Typescript_2.png') right bottom/contain no-repeat,
+        radial-gradient(circle at 75% 75%, rgba(255, 182, 193, 0.2) 0%, transparent 50%);
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.create-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.create-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.create-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(65, 88, 208, 0.1);
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.feature-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.feature-description {
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .create-form {
+        flex-direction: column;
+    }
+    
+    .create-input {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>简单、安全的文本分享</h1>
+        <p>快速创建和分享文本内容，支持设置密码保护和阅后即焚，让分享更加安全可靠。</p>
+        
+        <form class="create-form" onsubmit="return false;">
+            <input type="text" 
+                   class="create-input" 
+                   name="paste_name" 
+                   placeholder="输入剪贴板名称（可选）"
+                   pattern="[a-zA-Z0-9_-]*"
+                   title="只能使用字母、数字、下划线和连字符">
+            <button type="submit" class="btn-primary">创建剪贴板</button>
+        </form>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">密码保护</h3>
+                <p class="feature-description">为重要内容设置访问密码，确保信息安全。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3 class="feature-title">阅后即焚</h3>
+                <p class="feature-description">内容阅读一次后自动销毁，保护隐私。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3 class="feature-title">自动过期</h3>
+                <p class="feature-description">设置内容的有效期，过期后自动清除。</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pasteNameInput = document.querySelector('.create-input');
+    const createForm = document.querySelector('.create-form');
+
+    // 系统保留的页面名称
+    const reservedNames = [
+        'about', 'help', 'terms', 'privacy', 'contact',
+        'static', 'admin', 'login', 'register', 'settings',
+        'profile', 'dashboard', 'pages'
+    ];
+
+    // 生成随机名称
+    function generateRandomName(length = 8) {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let name;
+        do {
+            name = Array.from(crypto.getRandomValues(new Uint8Array(length)))
+                .map(x => chars[x % chars.length])
+                .join('');
+        } while (reservedNames.includes(name.toLowerCase()));
+        return name;
+    }
+
+    // 显示错误提示
+    function showError(message) {
+        const error = document.createElement('div');
+        error.style.cssText = `
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        `;
+        error.textContent = message;
+        
+        // 移除旧的错误提示
+        const oldError = document.querySelector('.paste-error');
+        if (oldError) {
+            oldError.remove();
+        }
+        
+        error.className = 'paste-error';
+        createForm.appendChild(error);
+
+        // 3秒后自动消失
+        setTimeout(() => error.remove(), 3000);
+    }
+
+    // 处理表单提交
+    createForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let pasteName = pasteNameInput.value.trim();
+        
+        // 如果为空，生成随机名称
+        if (!pasteName) {
+            pasteName = generateRandomName();
+        }
+        
+        // 检查是否是保留名称
+        if (reservedNames.includes(pasteName.toLowerCase())) {
+            showError('此名称已被系统保留，请使用其他名称');
+            pasteNameInput.focus();
+            return;
+        }
+
+        // 检查名称格式
+        if (!/^[a-zA-Z0-9_-]*$/.test(pasteName)) {
+            showError('名称只能包含字母、数字、下划线和连字符');
+            pasteNameInput.focus();
+            return;
+        }
+
+        // 跳转到新建的剪贴板页面
+        window.location.href = '/' + pasteName;
+    });
+
+    // 输入验证：只允许字母、数字、下划线和短横线
+    pasteNameInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '');
+    });
+});
+</script>
+{% endblock %}

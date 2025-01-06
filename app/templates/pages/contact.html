@@ -1,0 +1,362 @@
+{% extends "base.html" %}
+
+{% block title %}联系我们 - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="contact-page">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>联系我们</h1>
+            <p class="subtitle">我们随时欢迎您的反馈和建议</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="info-section">
+                    <h2>联系方式</h2>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <div class="info-icon">📧</div>
+                            <h3>电子邮件</h3>
+                            <p>xxxxx@gmail.com</p>
+                            <p class="description">工作日24小时内回复</p>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📞</div>
+                            <h3>客服电话</h3>
+                            <p>400-xxx-xxxx</p>
+                            <p class="description">周一至周五 9:00-18:00</p>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">💬</div>
+                            <h3>在线客服</h3>
+                            <p>点击右下角图标</p>
+                            <p class="description">实时解答您的问题</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-section">
+                    <h2>关注我们</h2>
+                    <div class="social-items">
+                        <a href="#" class="social-item">
+                            <div class="social-icon">📱</div>
+                            <span>微信公众号</span>
+                        </a>
+                        <a href="#" class="social-item">
+                            <div class="social-icon">💻</div>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="#" class="social-item">
+                            <div class="social-icon">📢</div>
+                            <span>新浪微博</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>发送消息</h2>
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label for="name">您的姓名</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">电子邮箱</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">主题</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">请选择主题</option>
+                            <option value="feedback">产品反馈</option>
+                            <option value="support">技术支持</option>
+                            <option value="business">商务合作</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">消息内容</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">发送消息</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>常见问题</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <h3>如何获取技术支持？</h3>
+                    <p>您可以通过在线客服、电子邮件或电话获取技术支持。我们的支持团队会在工作时间内为您提供帮助。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>响应时间是多久？</h3>
+                    <p>我们通常会在24小时内回复电子邮件。对于紧急问题，建议使用在线客服或电话联系我们。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>如何报告问题？</h3>
+                    <p>您可以通过联系表单或发送电子邮件报告问题。请尽可能详细地描述问题，包括复现步骤和错误信息。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.contact-page {
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.info-section, .social-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.info-section h2, .social-section h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.info-items {
+    display: grid;
+    gap: 2rem;
+}
+
+.info-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-item h3 {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.info-item p {
+    color: var(--text-color);
+    margin: 0;
+}
+
+.info-item .description {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}
+
+.social-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.social-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s;
+}
+
+.social-item:hover {
+    transform: translateY(-5px);
+}
+
+.social-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+}
+
+.faq-section {
+    margin-top: 4rem;
+}
+
+.faq-section h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.faq-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.faq-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.faq-item p {
+    color: var(--text-color);
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .content-section {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .social-items {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('messageForm');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // 在这里添加表单提交逻辑
+        alert('消息已发送！我们会尽快回复您。');
+        form.reset();
+    });
+});
+</script>
+{% endblock %} 

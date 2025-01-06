@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block title %}隐私政策 - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="privacy-page">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>隐私政策</h1>
+            <p class="subtitle">我们如何保护您的隐私和数据安全</p>
+            <p class="update-date">最后更新：2025年1月6日</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="privacy-content">
+            <div class="section-block">
+                <h2>概述</h2>
+                <p>在线剪贴板（以下简称"我们"）非常重视用户的隐私和个人信息保护。本隐私政策旨在帮助您了解我们如何收集、使用和保护您的个人信息。使用我们的服务即表示您同意本隐私政策的内容。</p>
+            </div>
+
+            <div class="section-block">
+                <h2>信息收集</h2>
+                <h3>我们收集的信息</h3>
+                <ul>
+                    <li>
+                        <strong>用户提供的内容</strong>
+                        <p>您在使用我们的服务时主动提供的文本内容。</p>
+                    </li>
+                    <li>
+                        <strong>访问日志</strong>
+                        <p>包括IP地址、浏览器类型、访问时间等基本访问信息。</p>
+                    </li>
+                    <li>
+                        <strong>Cookie信息</strong>
+                        <p>用于改善用户体验的必要Cookie信息。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>信息使用</h2>
+                <h3>我们如何使用您的信息</h3>
+                <ul>
+                    <li>
+                        <strong>提供服务</strong>
+                        <p>使用您的内容提供文本分享服务。</p>
+                    </li>
+                    <li>
+                        <strong>改善服务</strong>
+                        <p>分析使用数据以优化和改进我们的服务。</p>
+                    </li>
+                    <li>
+                        <strong>安全保护</strong>
+                        <p>防止滥用和确保服务安全。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>数据安全</h2>
+                <h3>我们如何保护您的数据</h3>
+                <ul>
+                    <li>
+                        <strong>加密存储</strong>
+                        <p>所有用户内容都经过加密存储。</p>
+                    </li>
+                    <li>
+                        <strong>安全传输</strong>
+                        <p>使用HTTPS协议确保数据传输安全。</p>
+                    </li>
+                    <li>
+                        <strong>访问控制</strong>
+                        <p>严格的内部访问控制机制。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>数据保留</h2>
+                <h3>内容保留政策</h3>
+                <ul>
+                    <li>
+                        <strong>永久内容</strong>
+                        <p>默认情况下永久保存，除非您设置了过期时间。</p>
+                    </li>
+                    <li>
+                        <strong>临时内容</strong>
+                        <p>根据您设置的过期时间自动删除。</p>
+                    </li>
+                    <li>
+                        <strong>阅后即焚</strong>
+                        <p>查看后立即删除的内容不会保留。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>用户权利</h2>
+                <h3>您的权利</h3>
+                <ul>
+                    <li>
+                        <strong>访问权</strong>
+                        <p>您有权访问您创建的所有内容。</p>
+                    </li>
+                    <li>
+                        <strong>修改权</strong>
+                        <p>您可以修改您创建的内容的设置。</p>
+                    </li>
+                    <li>
+                        <strong>删除权</strong>
+                        <p>您可以随时删除您创建的内容。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>Cookie使用</h2>
+                <h3>Cookie政策</h3>
+                <ul>
+                    <li>
+                        <strong>必要Cookie</strong>
+                        <p>用于维持基本功能的Cookie。</p>
+                    </li>
+                    <li>
+                        <strong>功能Cookie</strong>
+                        <p>用于改善用户体验的Cookie。</p>
+                    </li>
+                    <li>
+                        <strong>统计Cookie</strong>
+                        <p>用于分析服务使用情况的Cookie。</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h2>政策更新</h2>
+                <p>我们可能会不时更新本隐私政策。更新后的政策将在本页面上发布，并注明更新日期。重大变更将通过网站公告通知用户。</p>
+            </div>
+
+            <div class="section-block">
+                <h2>联系我们</h2>
+                <p>如果您对本隐私政策有任何疑问或建议，请通过以下方式联系我们：</p>
+                <div class="contact-info">
+                    <p>📧 邮箱：xxxx@gmail.com</p>
+                    <p>📞 电话：400-xxx-xxxx</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.privacy-page {
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.update-date {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.privacy-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section-block {
+    margin-bottom: 4rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.section-block:last-child {
+    margin-bottom: 0;
+}
+
+.section-block h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.section-block h3 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin: 1.5rem 0 1rem;
+}
+
+.section-block p {
+    color: var(--text-color);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.section-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.section-block li {
+    margin-bottom: 1.5rem;
+}
+
+.section-block li strong {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.section-block li p {
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--primary-color);
+}
+
+.contact-info {
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.contact-info p {
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .content-section {
+        padding: 2rem 1rem;
+    }
+    
+    .section-block {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %} 

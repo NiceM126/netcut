@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}{{ error }} - 在线剪贴板{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <div class="error-container">
+        <div class="error-animation">
+            {% if error == '页面未找到' %}
+            <div class="error-404">
+                <div class="error-number">4</div>
+                <div class="error-astronaut">
+                    <div class="astronaut-emoji">👨‍🚀</div>
+                </div>
+                <div class="error-number">4</div>
+            </div>
+            {% else %}
+            <div class="error-500">
+                <div class="error-gear">⚙️</div>
+                <div class="error-number">500</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="error-content">
+            <h1>{{ error }}</h1>
+            
+            {% if error == '页面未找到' %}
+            <p class="error-description">抱歉，您访问的页面似乎漂流到了外太空 🚀</p>
+            <div class="error-tips">
+                <p>您可以尝试：</p>
+                <ul>
+                    <li>检查输入的网址是否正确</li>
+                    <li>返回首页创建新的剪贴板</li>
+                    <li>联系我们寻求帮助</li>
+                </ul>
+            </div>
+            {% elif error == '服务器内部错误' %}
+            <p class="error-description">抱歉，服务器遇到了一些小问题 🔧</p>
+            <div class="error-tips">
+                <p>请稍后再试，或者您可以：</p>
+                <ul>
+                    <li>刷新页面重试</li>
+                    <li>返回首页</li>
+                    <li>联系我们报告问题</li>
+                </ul>
+            </div>
+            {% else %}
+            <p class="error-description">发生了一些错误，请重试 🤔</p>
+            {% endif %}
+            
+            <div class="error-actions">
+                <a href="/" class="btn-primary">返回首页</a>
+                <a href="/contact" class="btn-secondary">联系我们</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.error-page {
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.error-container {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+.error-animation {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 3rem 0;
+    color: white;
+}
+
+.error-404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+.error-astronaut {
+    animation: float 6s ease-in-out infinite;
+}
+
+.astronaut-emoji {
+    font-size: 4rem;
+    transform: rotate(45deg);
+}
+
+.error-500 {
+    position: relative;
+}
+
+.error-gear {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    animation: rotate 10s linear infinite;
+}
+
+.error-number {
+    font-size: 5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.error-content {
+    padding: 2rem;
+}
+
+.error-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.error-description {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 2rem;
+}
+
+.error-tips {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.error-tips p {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.error-tips ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.error-tips li {
+    margin: 0.5rem 0;
+    color: var(--text-color);
+    opacity: 0.8;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.error-tips li::before {
+    content: '•';
+    position: absolute;
+    left: 0.5rem;
+    color: var(--primary-color);
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(45deg); }
+    50% { transform: translateY(-20px) rotate(45deg); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .error-container {
+        margin: 1rem;
+        border-radius: 12px;
+    }
+    
+    .error-404 {
+        font-size: 4rem;
+    }
+    
+    .astronaut-emoji {
+        font-size: 3rem;
+    }
+    
+    .error-content {
+        padding: 1.5rem;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+    }
+    
+    .error-actions a {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %} 
