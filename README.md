@@ -221,11 +221,6 @@ flask run
 
 MIT License
 
-## 联系方式
-
-- 📧 Email：contact@example.com
-- 💬 GitHub：[项目仓库](https://github.com/your-username/netcut)
-
 ## 致谢
 
 参考：https://netcut.cn/
