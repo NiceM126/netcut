@@ -210,23 +210,10 @@ flask run
 3. Q: 支持哪些内容格式？
    A: 支持纯文本内容，包括代码、链接等。
 
-## 贡献指南
+## 关于
+关于开发大致过程，记录在我的公众号中
+[我用AI全栈开发了一个漂亮的在线剪贴板](https://mp.weixin.qq.com/s/VCZ9JnePDKWwgnUMdVn9Mw)
+欢迎关注我的公众号哦
 
-1. Fork 项目
-2. 创建功能分支
-3. 提交代码
-4. 发起 Pull Request
+![wechat](./img/wechat-github-ai.png)
 
-## 开源协议
-
-MIT License
-
-## 联系方式
-
-- 📧 Email：contact@example.com
-- 💬 GitHub：[项目仓库](https://github.com/your-username/netcut)
-
-## 致谢
-
-参考：https://netcut.cn/
-感谢所有开源项目的贡献者，是你们让这个项目成为可能。 
