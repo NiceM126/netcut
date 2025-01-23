@@ -4,9 +4,9 @@
 
 一个简单、安全、高效的在线文本分享平台。支持密码保护、阅后即焚、自定义过期时间等功能。
 
-![home](.\img\home.png)
+![home](/img/home.png)
 
-![view](.\img\view.png)
+![view](/img/view.png)
 
 
 ## 功能特点
@@ -216,4 +216,3 @@ flask run
 欢迎关注我的公众号哦
 
 ![wechat](./img/wechat-github-ai.png)
-
