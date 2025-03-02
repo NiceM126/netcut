@@ -33,7 +33,8 @@ netcut/
 │   │   ├── page_routes.py     # 页面路由
 │   │   └── paste_routes.py    # 剪贴板相关路由
 │   ├── services/              # 业务逻辑层
-│   │   └── paste_service.py   # 剪贴板服务
+│   │   |── paste_service.py   # 剪贴板服务
+|   |   └── mail_service.py    # 邮件服务
 │   ├── static/                # 静态资源
 │   │   ├── images/           # 图片资源
 │   │   │   ├── favicon.svg   # 网站图标
@@ -55,9 +56,7 @@ netcut/
 │   ├── extensions.py         # Flask扩展
 │   └── __init__.py           # 应用初始化
 ├── docker/                    # Docker相关文件
-├── ssl/                      # SSL证书目录
 ├── .env                      # 环境变量
-├── .env.example              # 环境变量示例
 ├── config.py                 # 配置文件
 ├── docker-compose.yml        # Docker编排配置
 ├── Dockerfile                # Docker构建文件
@@ -85,36 +84,24 @@ netcut/
 git clone https://github.com/your-username/netcut.git
 cd netcut
 ```
-
-2. 配置环境变量
+2. 检查Nginx配置
 ```bash
-# 复制环境变量示例文件
-cp .env.example .env
-
-# 编辑.env文件，修改必要的配置项
-# 特别是 SECRET_KEY 和 ENCRYPTION_KEY
+/usr/local/nginx/sbin/nginx -t
+# 修改nginx后
+/usr/local/nginx/sbin/nginx -s reload
 ```
-
-3. 配置SSL证书
-```bash
-# 创建ssl目录
-mkdir ssl
-
-# 将SSL证书和私钥放入ssl目录
-# - cert.pem：SSL证书
-# - key.pem：私钥
-```
-
-4. 启动服务
+3. 启动服务
 ```bash
 # 构建并启动所有服务
 docker-compose up -d
-
+```
 # 查看服务状态
-docker-compose ps
-
+```bash
+docker ps -a
+```
 # 查看日志
-docker-compose logs -f
+```bash
+docker logs -f
 ```
 
 ### 本地开发
@@ -135,19 +122,12 @@ brew install redis
 # 从 https://github.com/microsoftarchive/redis/releases 下载安装包
 ```
 
-2. 创建虚拟环境
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-```
-
-3. 安装依赖
+2. 安装依赖
 ```bash
 pip install -r requirements.txt
 ```
 
-4. 配置 Redis
+3. 配置 Redis
 ```bash
 # 启动 Redis 服务
 # Linux/macOS
@@ -160,7 +140,7 @@ redis-server
 redis-cli ping  # 应该返回 PONG
 ```
 
-5. 启动开发服务器
+4. 启动开发服务器
 ```bash
 flask run
 ```
@@ -193,26 +173,3 @@ flask run
 - `REDIS_PORT`：Redis端口
 - `ENCRYPTION_KEY`：内容加密密钥
 
-### Docker配置
-
-- Web服务：运行Flask应用，端口5000
-- Redis：数据存储，持久化配置
-- Nginx：反向代理，SSL终端
-
-## 常见问题
-
-1. Q: 内容会永久保存吗？
-   A: 不会，所有内容都有过期时间，最长30天。
-
-2. Q: 忘记密码怎么办？
-   A: 密码无法找回，建议重新创建剪贴板。
-
-3. Q: 支持哪些内容格式？
-   A: 支持纯文本内容，包括代码、链接等。
-
-## 关于
-关于开发大致过程，记录在我的公众号中
-[我用AI全栈开发了一个漂亮的在线剪贴板](https://mp.weixin.qq.com/s/VCZ9JnePDKWwgnUMdVn9Mw)
-欢迎关注我的公众号哦
-
-![wechat](./img/wechat-github-ai.png)
