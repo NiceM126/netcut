@@ -1,7 +1,12 @@
-from flask import Blueprint, render_template, request, jsonify, abort, current_app, session
+from flask import Blueprint, render_template, request, jsonify, abort, session
+from ..services.mail_service import MailService
 from ..services.paste_service import PasteService
 
 bp = Blueprint('paste', __name__)
+# bp = Blueprint('paste', __name__, url_prefix='/netcut')
+
+mail_service = MailService()
+paste_service = PasteService()
 
 @bp.route('/')
 def index():
@@ -13,17 +18,27 @@ def paste(paste_name):
     """处理剪贴板的创建和访问"""
     try:
         # 验证剪贴板名称
-        if not paste_name.replace('-', '').replace('_', '').isalnum():
-            abort(404)
+        if not paste_name or len(paste_name) < 2:  # 至少2个字符
+            return jsonify({'error': '剪贴板名称太短'}), 400
             
-        paste_service = PasteService()
+        if len(paste_name) > 50:  # 最多50个字符
+            return jsonify({'error': '剪贴板名称太长'}), 400
+            
+        # 检查是否是纯数字
+        if paste_name.isdigit():
+            return jsonify({'error': '剪贴板名称不能是纯数字'}), 400
+            
+        # 检查字符是否合法（允许字母、数字、连字符和下划线）
+        if not all(c.isalnum() or c in '-_' for c in paste_name):
+            return jsonify({'error': '剪贴板名称只能包含字母、数字、连字符和下划线'}), 400
         
         if request.method == 'POST':
             # 处理保存请求
             data = request.get_json()
             if not data:
                 return jsonify({'error': '无效的请求数据'}), 400
-                
+
+            # 如果是创建/更新请求（包含content字段   
             try:
                 print(f"创建剪贴板: {paste_name}")
                 print(f"请求数据: {data}")
@@ -39,6 +54,7 @@ def paste(paste_name):
             except ValueError as e:
                 print(f"创建失败: {str(e)}")
                 return jsonify({'error': str(e)}), 400
+            
         else:
             # 处理获取请求
             try:
@@ -46,7 +62,7 @@ def paste(paste_name):
                 # 检查是否已通过密码验证
                 is_authenticated = session.get(f'paste_auth_{paste_name}', False)
                 
-                # 尝试获取剪贴板内容
+                # 如果剪贴板存在且有密码，但未认证，则跳转到密码页
                 paste = paste_service.get_paste(paste_name, None if not is_authenticated else '')
                 
                 if paste is None:
@@ -134,9 +150,43 @@ def verify_password(paste_name):
             'created_at': paste.get('created_at'),
             'expires_at': paste.get('expires_at'),
             'burn_after_read': paste.get('burn_after_read'),
-            'views': paste.get('views')
+            'views': paste.get('views'),
+            'redirect_url': f'/netcut/{paste_name}'
         })
             
     except Exception as e:
         print(f"验证过程出错: {str(e)}")
         return jsonify({'error': str(e)}), 500
+    
+@bp.route('/api/contact', methods=['POST'])
+def handle_contact():
+    """处理联系表单提交"""
+    data = request.get_json()
+    
+    # 验证必填字段
+    required_fields = ['name', 'email', 'subject', 'message']
+    for field in required_fields:
+        if not data.get(field):
+            return jsonify({
+                'status': 'error',
+                'message': f'{field} 是必填项'
+            }), 400
+    
+    # 发送邮件
+    success, error_message = mail_service.send_contact_email(
+        name=data['name'],
+        email=data['email'],
+        subject=data['subject'],
+        message=data['message']
+    )
+    
+    if success:
+        return jsonify({
+            'status': 'success',
+            'message': '消息已发送，我们会尽快回复您'
+        })
+    else:
+        return jsonify({
+            'status': 'error',
+            'message': f'发送失败: {error_message}，请稍后重试'
+        }), 500    

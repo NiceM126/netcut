@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, abort
 
-bp = Blueprint('pages', __name__, url_prefix='/pages')
+bp = Blueprint('pages', __name__)
+# bp = Blueprint('pages', __name__, url_prefix='/netcut/pages')
 
 @bp.route('/about')
 def about():
@@ -26,3 +27,11 @@ def privacy():
 def contact():
     """联系我们页面"""
     return render_template('pages/contact.html') 
+
+@bp.route('/pages/<page_name>')
+def static_page(page_name):
+    """处理静态页面"""
+    try:
+        return render_template(f'pages/{page_name}.html')
+    except:
+        abort(404)
