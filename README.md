@@ -6,7 +6,7 @@
 
 ![home](/img/home.png)
 
-![view](/img/view.png)
+![paste](/img/paste.png)
 
 
 ## 功能特点
