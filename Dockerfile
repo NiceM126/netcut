@@ -26,6 +26,8 @@ COPY run.py .
 
 # 安装Python依赖
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
+RUN pip install bcrypt
 
 # 暴露端口
 EXPOSE 5000
