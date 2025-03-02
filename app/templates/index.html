@@ -58,8 +58,10 @@
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));   
     -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
     font-weight: bold;
 }
@@ -119,7 +121,9 @@
     font-size: 2rem;
     margin-bottom: 1rem;
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
     -webkit-background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
 }
 
@@ -252,6 +256,33 @@ document.addEventListener('DOMContentLoaded', function() {
         // 如果为空，生成随机名称
         if (!pasteName) {
             pasteName = generateRandomName();
+        } else {
+            // 验证名称长度
+            if (pasteName.length < 2) {
+                showError('剪贴板名称至少需要2个字符');
+                pasteNameInput.focus();
+                return;
+            }
+            
+            if (pasteName.length > 50) {
+                showError('剪贴板名称不能超过50个字符');
+                pasteNameInput.focus();
+                return;
+            }
+            
+            // 检查是否是纯数字
+            if (/^\d+$/.test(pasteName)) {
+                showError('剪贴板名称不能是纯数字');
+                pasteNameInput.focus();
+                return;
+            }
+            
+            // 检查字符是否合法
+            if (!/^[a-zA-Z0-9_-]+$/.test(pasteName)) {
+                showError('剪贴板名称只能包含字母、数字、连字符和下划线');
+                pasteNameInput.focus();
+                return;
+            }
         }
         
         // 检查是否是保留名称
@@ -261,15 +292,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // 检查名称格式
-        if (!/^[a-zA-Z0-9_-]*$/.test(pasteName)) {
-            showError('名称只能包含字母、数字、下划线和连字符');
-            pasteNameInput.focus();
-            return;
-        }
-
         // 跳转到新建的剪贴板页面
-        window.location.href = '/' + pasteName;
+        window.location.href = '/netcut/' + pasteName;
     });
 
     // 输入验证：只允许字母、数字、下划线和短横线

@@ -26,10 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             try {
-                const response = await fetch('/api/paste', {
+                const response = await fetch('/netcut/api/paste', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
                     },
                     body: JSON.stringify(formData)
                 });
@@ -38,13 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (response.ok) {
                     // 跳转到查看页面
-                    window.location.href = `/paste/${data.id}`;
+                    window.location.href = `/netcut/${data.id}`;
                 } else {
-                    alert(data.error || '创建失败，请重试');
+                    showToast(data.error || '创建失败，请重试', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('发生错误，请重试');
+                showToast('发生错误，请重试', 'error');
             }
         });
     }
@@ -61,5 +62,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 2000);
             });
         });
+    }
+
+    // 显示提示信息
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        if (toast) {
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
     }
 });

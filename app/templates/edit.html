@@ -6,7 +6,7 @@
 <div class="container">
     <div class="edit-header">
         <div class="header-left">
-            <a href="/" class="home-link">首页</a>
+            <a href="/netcut" class="home-link">首页</a>
             <span class="divider">|</span>
             <span class="paste-url">
                 <span class="url-label">剪贴板地址：</span>
@@ -32,14 +32,25 @@
                 <span id="charCount">0</span> 个字符 |
                 <span id="lineCount">0</span> 行
             </div>
+            <div class="views-count">
+                <span id="viewsCount">{{ paste.views if paste and paste.views else 0 }}</span> 次访问
+            </div>
+        </div>
+        <div class="footer-middle">
+            <div class="expiration-info">
+                {% if paste and paste.expires_at %}
+                    过期时间: <span id="expirationTime">{{ paste.expires_at }}</span>
+                {% endif %}
+            </div>
         </div>
         <div class="footer-right">
             <div class="paste-options">
                 <select id="expiration" class="select-style">
-                    <option value="3600">1小时后过期</option>
-                    <option value="86400">1天后过期</option>
-                    <option value="604800" selected>7天后过期</option>
-                    <option value="2592000">30天后过期</option>
+                    <option value="60">1分钟</option>
+                    <option value="3600">1小时</option>
+                    <option value="86400" selected>1天</option>
+                    <option value="604800">7天</option>
+                    <option value="2592000">30天</option>
                 </select>
 
                 <input type="password" 
@@ -151,9 +162,32 @@
     border-top: 1px solid var(--border-color);
 }
 
-.word-count {
+.footer-left, .footer-middle, .footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-middle {
+    flex: 1;
+    justify-content: center;
+    margin: 0 1rem;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.word-count, .views-count, .expiration-info {
     color: var(--text-color);
     opacity: 0.8;
+    padding: 0 0.5rem;
+    border-right: 1px solid var(--border-color);
+}
+
+.word-count:last-child, .views-count:last-child, .expiration-info:last-child {
+    border-right: none;
 }
 
 .paste-options {
@@ -232,6 +266,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const charCount = document.getElementById('charCount');
     const lineCount = document.getElementById('lineCount');
     const toast = document.getElementById('toast');
+    const expirationSelect = document.getElementById('expiration');
+    const passwordInput = document.getElementById('password');
+    const burnAfterReadCheckbox = document.getElementById('burnAfterRead');
+    const expirationTime = document.getElementById('expirationTime');
+
+    // 检查 localStorage 中是否有剪贴板内容
+    const storedContent = localStorage.getItem('clipboardContent');
+    if (storedContent) {
+        content.value = storedContent;
+        
+        // 设置其他相关信息
+        const storedExpiresAt = localStorage.getItem('clipboardExpiresAt');
+        if (storedExpiresAt && expirationTime) {
+            expirationTime.textContent = formatExpirationTime(storedExpiresAt);
+        }
+        
+        const storedBurnAfterRead = localStorage.getItem('clipboardBurnAfterRead');
+        if (storedBurnAfterRead) {
+            burnAfterReadCheckbox.checked = storedBurnAfterRead === 'true';
+        }
+        
+        // 清除 localStorage 中的数据
+        localStorage.removeItem('clipboardContent');
+        localStorage.removeItem('clipboardCreatedAt');
+        localStorage.removeItem('clipboardExpiresAt');
+        localStorage.removeItem('clipboardViews');
+        localStorage.removeItem('clipboardBurnAfterRead');
+        
+        // 更新字数统计
+        updateCount();
+    }
 
     // 显示提示消息
     function showToast(message, duration = 2000) {
@@ -273,9 +338,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const data = {
             content: content.value,
-            expiration: parseInt(document.getElementById('expiration').value),
-            password: document.getElementById('password').value,
-            burn_after_read: document.getElementById('burnAfterRead').checked
+            expiration: expirationSelect.value,
+            password: passwordInput.value,
+            burn_after_read: burnAfterReadCheckbox.checked
         };
         
         try {
@@ -292,9 +357,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (response.ok) {
                 showToast('保存成功！');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+                // 如果设置了密码，需要刷新页面以显示密码验证
+                if (data.password) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+                if (result.expires_at) {
+                    expirationTime.textContent = formatExpirationTime(result.expires_at);
+                }
             } else {
                 showToast(result.error || '保存失败，请重试');
             }
@@ -309,6 +380,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始化字数统计
     updateCount();
+
+    // 格式化过期时间显示
+    function formatExpirationTime(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
 });
 </script>
 {% endblock %} 

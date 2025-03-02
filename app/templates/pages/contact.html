@@ -20,7 +20,7 @@
                         <div class="info-item">
                             <div class="info-icon">📧</div>
                             <h3>电子邮件</h3>
-                            <p>xxxxx@gmail.com</p>
+                            <p>niexiangxing@gmail.com</p>
                             <p class="description">工作日24小时内回复</p>
                         </div>
                         <div class="info-item">
@@ -41,15 +41,15 @@
                 <div class="social-section">
                     <h2>关注我们</h2>
                     <div class="social-items">
-                        <a href="#" class="social-item">
+                        <a href="/netcut/#" class="social-item">
                             <div class="social-icon">📱</div>
                             <span>微信公众号</span>
                         </a>
-                        <a href="#" class="social-item">
+                        <a href="/netcut/#" class="social-item">
                             <div class="social-icon">💻</div>
                             <span>GitHub</span>
                         </a>
-                        <a href="#" class="social-item">
+                        <a href="/netcut/#" class="social-item">
                             <div class="social-icon">📢</div>
                             <span>新浪微博</span>
                         </a>
@@ -63,11 +63,13 @@
                     <div class="form-group">
                         <label for="name">您的姓名</label>
                         <input type="text" id="name" name="name" required>
+                        <div class="error-message" id="nameError"></div>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">电子邮箱</label>
                         <input type="email" id="email" name="email" required>
+                        <div class="error-message" id="emailError"></div>
                     </div>
                     
                     <div class="form-group">
@@ -79,14 +81,23 @@
                             <option value="business">商务合作</option>
                             <option value="other">其他</option>
                         </select>
+                        <div class="error-message" id="subjectError"></div>
                     </div>
                     
                     <div class="form-group">
                         <label for="message">消息内容</label>
                         <textarea id="message" name="message" rows="6" required></textarea>
+                        <div class="error-message" id="messageError"></div>
                     </div>
                     
-                    <button type="submit" class="btn-primary">发送消息</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">发送消息</span>
+                        <span class="btn-loading" style="display: none;">
+                            <svg class="spinner" viewBox="0 0 50 50">
+                                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                            </svg>
+                        </span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -108,6 +119,14 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- 提示框 -->
+<div id="toast" class="toast" style="display: none;">
+    <div class="toast-content">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
     </div>
 </div>
 {% endblock %}
@@ -268,7 +287,7 @@
     border-radius: 8px;
     font-size: 1rem;
     color: var(--text-color);
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .form-group input:focus,
@@ -276,6 +295,14 @@
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
 }
 
 .btn-primary {
@@ -283,6 +310,107 @@
     padding: 1rem;
     font-size: 1.1rem;
     border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    animation: rotate 2s linear infinite;
+}
+
+.path {
+    stroke: #ffffff;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 300px;
+}
+
+.toast-icon {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.toast-message {
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.toast.success .toast-content {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+.toast.success .toast-icon::before {
+    content: '✓';
+    color: #28a745;
+}
+
+.toast.error .toast-content {
+    background: #f8d7da;
+    border-left: 4px solid #dc3545;
+}
+
+.toast.error .toast-icon::before {
+    content: '✕';
+    color: #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .faq-section {
@@ -349,13 +477,118 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('messageForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const toast = document.getElementById('toast');
+    
+    // 显示提示框
+    function showToast(message, type = 'success') {
+        toast.className = `toast ${type}`;
+        toast.querySelector('.toast-message').textContent = message;
+        toast.style.display = 'block';
+        
+        // 3秒后自动隐藏
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3000);
+    }
+    
+    // 显示错误信息
+    function showError(field, message) {
+        const errorElement = document.getElementById(`${field}Error`);
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+    }
+    
+    // 清除所有错误信息
+    function clearErrors() {
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(element => {
+            element.style.display = 'none';
+            element.textContent = '';
+        });
+    }
+    
+    // 表单验证
+    function validateForm(formData) {
+        let isValid = true;
+        clearErrors();
+        
+        if (!formData.name.trim()) {
+            showError('name', '请输入您的姓名');
+            isValid = false;
+        }
+        
+        if (!formData.email.trim()) {
+            showError('email', '请输入您的邮箱');
+            isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            showError('email', '请输入有效的邮箱地址');
+            isValid = false;
+        }
+        
+        if (!formData.subject) {
+            showError('subject', '请选择主题');
+            isValid = false;
+        }
+        
+        if (!formData.message.trim()) {
+            showError('message', '请输入消息内容');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
     
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // 在这里添加表单提交逻辑
-        alert('消息已发送！我们会尽快回复您。');
-        form.reset();
+        const formData = {
+            name: form.name.value,
+            email: form.email.value,
+            subject: form.subject.value,
+            message: form.message.value
+        };
+        
+        if (!validateForm(formData)) {
+            return;
+        }
+        
+        // 显示加载状态
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'block';
+        submitBtn.disabled = true;
+        
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                showToast(result.message);
+                form.reset();
+            } else {
+                showToast(result.message, 'error');
+            }
+        } catch (error) {
+            console.error('发送消息失败:', error);
+            showToast('发送失败，请稍后重试', 'error');
+        } finally {
+            // 恢复按钮状态
+            btnText.style.display = 'block';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
     });
 });
 </script>
