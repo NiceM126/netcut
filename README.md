@@ -1,7 +1,7 @@
 # 在线剪贴板
 
 > 🎯 本项目由 [Cursor](https://cursor.sh/) - 基于 AI 的新一代 IDE 开发。
-> 🎯 项目原作者 [zxcv0221](https://github.com/zxcv0221/netcut)
+> 项目原作者 [zxcv0221](https://github.com/zxcv0221/netcut)
 
 一个简单、安全、高效的在线文本分享平台。支持密码保护、阅后即焚、自定义过期时间等功能。
 
@@ -62,7 +62,7 @@ netcut/
 ├── config.py                 # 配置文件
 ├── docker-compose.yml        # Docker编排配置
 ├── Dockerfile                # Docker构建文件
-├── nginx.conf                # Nginx配置
+├── nginx.conf                # Nginx参考配置配置
 ├── requirements.txt          # Python依赖
 ├── run.py                    # 应用入口
 └── README.md                 # 项目说明
