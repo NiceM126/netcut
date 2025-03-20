@@ -9,6 +9,8 @@
 
 ![paste](/img/paste.png)
 
+![paste](/img/contact.png)
+
 
 ## 功能特点
 
