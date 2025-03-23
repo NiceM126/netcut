@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, abort
 
-bp = Blueprint('pages', __name__)
-# bp = Blueprint('pages', __name__, url_prefix='/netcut/pages')
+bp = Blueprint('pages', __name__, url_prefix='/')
 
 @bp.route('/about')
 def about():
