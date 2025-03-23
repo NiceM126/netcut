@@ -13,7 +13,7 @@ csrf = CSRFProtect()
 
 def create_app(config_class=Config):
     """应用工厂函数"""
-    app = Flask(__name__, static_url_path='/netcut/static')
+    app = Flask(__name__, static_url_path='/static')
     
     # 加载配置文件
     load_dotenv(find_dotenv('.env'))
@@ -26,10 +26,8 @@ def create_app(config_class=Config):
     
     # 注册蓝图
 
-    app.register_blueprint(page_bp, url_prefix='/netcut/pages')
-    app.register_blueprint(paste_bp, url_prefix='/netcut')
-    # app.register_blueprint(page_bp, url_prefix='/pages')
-    # app.register_blueprint(paste_bp, url_prefix='/')
+    app.register_blueprint(page_bp, url_prefix='/pages')
+    app.register_blueprint(paste_bp, url_prefix='/')
 
     # 打印邮件配置信息（调试用）
     # print("邮件配置信息:")
@@ -119,7 +117,7 @@ def create_app(config_class=Config):
     def set_cookie_path():
         session.permanent = True
         app.config.update(
-            SESSION_COOKIE_PATH = '/netcut',
+            SESSION_COOKIE_PATH = '/',
             SESSION_COOKIE_NAME = 'netcut_session'
         )
     
