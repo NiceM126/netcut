@@ -10,6 +10,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - FLASK_ENV=production
+      - TZ=Asia/Shanghai
     env_file:
       - .env
     depends_on:
@@ -23,10 +24,10 @@ services:
     environment:
       - TZ=Asia/Shanghai
     restart: always
-    command: redis-server redis.conf --appendonly yes
+    command: redis-server /etc/redis/redis.conf --appendonly yes
     volumes:
       - redis-data:/data
-      - redis.conf:/etc/redis/redis.conf
+      - ./redis.conf:/etc/redis/redis.conf
     networks:
       - netcut-network
 

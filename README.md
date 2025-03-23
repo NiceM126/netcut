@@ -1,13 +1,15 @@
 # 在线剪贴板
 
-> 🎯 本项目由 [Cursor](https://cursor.sh/) - 基于 AI 的新一代 IDE 开发。Cursor 是一个强大的 AI 编程助手，它让编程变得更加智能和高效。
-> 🎯 项目原作者 [zxcv0221](https://github.com/zxcv0221/netcut)
+> 🎯 本项目由 [Cursor](https://cursor.sh/) - 基于 AI 的新一代 IDE 开发。
+> 项目原作者 [zxcv0221](https://github.com/zxcv0221/netcut)
 
 一个简单、安全、高效的在线文本分享平台。支持密码保护、阅后即焚、自定义过期时间等功能。
 
 ![home](/img/home.png)
 
 ![paste](/img/paste.png)
+
+![paste](/img/contact.png)
 
 
 ## 功能特点
@@ -35,8 +37,8 @@ netcut/
 │   │   ├── page_routes.py     # 页面路由
 │   │   └── paste_routes.py    # 剪贴板相关路由
 │   ├── services/              # 业务逻辑层
-│   │   |── paste_service.py   # 剪贴板服务
-|   |   └── mail_service.py    # 邮件服务
+│   │   ├── paste_service.py   # 剪贴板服务
+│   │   └── mail_service.py    # 邮件服务
 │   ├── static/                # 静态资源
 │   │   ├── images/           # 图片资源
 │   │   │   ├── favicon.svg   # 网站图标
@@ -62,7 +64,7 @@ netcut/
 ├── config.py                 # 配置文件
 ├── docker-compose.yml        # Docker编排配置
 ├── Dockerfile                # Docker构建文件
-├── nginx.conf                # Nginx配置
+├── nginx.conf                # Nginx参考配置配置
 ├── requirements.txt          # Python依赖
 ├── run.py                    # 应用入口
 └── README.md                 # 项目说明
@@ -150,15 +152,13 @@ flask run
 ## 使用说明
 
 1. 创建剪贴板
-   - 访问首页
    - 输入或粘贴文本内容
    - 可选择设置密码保护、过期时间、阅后即焚
    - 点击"保存内容"按钮
 
 2. 分享内容
    - 复制生成的链接
-   - 如果设置了密码，需要填写密码才能查看
-   - 接收者通过链接访问内容
+   - 如果设置了密码，需要填写密码才能通过链接访问内容
 
 3. 安全提示
    - 重要内容建议使用密码保护
