@@ -2,8 +2,7 @@ from flask import Blueprint, render_template, request, jsonify, abort, session
 from ..services.mail_service import MailService
 from ..services.paste_service import PasteService
 
-bp = Blueprint('paste', __name__)
-# bp = Blueprint('paste', __name__, url_prefix='/netcut')
+bp = Blueprint('paste', __name__, url_prefix='/')
 
 mail_service = MailService()
 paste_service = PasteService()
@@ -74,8 +73,13 @@ def paste(paste_name):
                         print("需要密码访问")
                         return render_template('password.html', paste_name=paste_name)
                     else:
-                        # 从会话中获取已解密的内容
-                        paste['content'] = session.get(f'paste_content_{paste_name}')
+                        # 已通过密码验证，获取完整内容并更新访问次数
+                        # 从session获取我们需要的密码
+                        stored_password = session.get(f'paste_password_{paste_name}', '')
+                        # 重新获取paste以确保views计数更新
+                        paste = paste_service.get_paste(paste_name, stored_password)
+                        if not paste:
+                            return jsonify({'error': '剪贴板内容不存在'}), 404
                 
                 print("返回编辑页面")
                 return render_template('edit.html', paste_name=paste_name, paste=paste)
@@ -142,6 +146,8 @@ def verify_password(paste_name):
         # 设置会话标记，表示已通过密码验证
         session[f'paste_auth_{paste_name}'] = True
         session[f'paste_content_{paste_name}'] = paste.get('content')
+        # 存储密码以便后续访问计数
+        session[f'paste_password_{paste_name}'] = data['password']
         
         return jsonify({
             'status': 'success',
@@ -151,12 +157,21 @@ def verify_password(paste_name):
             'expires_at': paste.get('expires_at'),
             'burn_after_read': paste.get('burn_after_read'),
             'views': paste.get('views'),
-            'redirect_url': f'/netcut/{paste_name}'
+            'redirect_url': f'/{paste_name}'
         })
             
     except Exception as e:
         print(f"验证过程出错: {str(e)}")
         return jsonify({'error': str(e)}), 500
+    
+@bp.route('/<paste_name>/delete', methods=['DELETE'])
+def delete_paste(paste_name):
+    paste_service = PasteService()
+    try:
+        paste_service.delete_paste(paste_name)
+        return jsonify({'status': 'success', 'message': '内容已清除'}), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
     
 @bp.route('/api/contact', methods=['POST'])
 def handle_contact():
