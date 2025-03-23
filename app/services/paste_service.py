@@ -167,3 +167,19 @@ class PasteService:
             'has_password': paste.get('has_password', False),
             'content': paste.get('content')
         }
+    
+    def delete_paste(self, paste_name):
+        """删除剪贴板内容"""
+        try:
+            # 构造正确的键名
+            key = f'paste:{paste_name}'
+            
+            # 检查剪贴板是否存在
+            if not self.db.get(key):
+                raise ValueError('剪贴板内容不存在')
+                
+            # 删除剪贴板数据
+            self.db.delete(key)
+            return True
+        except Exception as e:
+            raise ValueError(f'删除剪贴板失败: {str(e)}')
