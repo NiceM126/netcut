@@ -1,22 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 主题切换
-    const themeToggle = document.querySelector('.theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-    }
 
     // 表单提交
     const pasteForm = document.getElementById('pasteForm');
     if (pasteForm) {
         pasteForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const formData = {
                 content: document.getElementById('content').value,
                 expiration: parseInt(document.getElementById('expiration').value),
@@ -26,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             try {
-                const response = await fetch('/netcut/api/paste', {
+                const response = await fetch('/api/paste', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -36,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 const data = await response.json();
-                
+
                 if (response.ok) {
                     // 跳转到查看页面
-                    window.location.href = `/netcut/${data.id}`;
+                    window.location.href = `/${data.id}`;
                 } else {
                     showToast(data.error || '创建失败，请重试', 'error');
                 }
@@ -50,20 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 复制按钮
-    const copyButton = document.querySelector('.btn-copy');
-    if (copyButton) {
-        copyButton.addEventListener('click', function() {
-            const content = document.querySelector('.paste-content pre').textContent;
-            navigator.clipboard.writeText(content).then(function() {
-                copyButton.textContent = '已复制！';
-                setTimeout(() => {
-                    copyButton.textContent = '复制内容';
-                }, 2000);
-            });
-        });
-    }
-
+ 
     // 显示提示信息
     function showToast(message, type = 'success') {
         const toast = document.getElementById('toast');
@@ -76,4 +52,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         }
     }
+});
+
+function clearPasteContent(pasteId) {
+
+    fetch(`/${pasteId}/delete`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            showToast('内容已清除', 'success');
+            // 清除页面上的内容显示
+            document.getElementById('content').value = '';
+            // 延迟后重定向到首页
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1500);
+        } else {
+            showToast('清除内容失败', 'error');
+        }
+    })
+    .catch(error => {
+        showToast('清除内容失败', 'error');
+    });
+}
+
+// 绑定清除按钮的点击事件
+document.getElementById('clearBtn').addEventListener('click', function() {
+    const pasteId = document.getElementById('paste-id').value; // 获取剪贴板ID
+    clearPasteContent(pasteId);
 });
