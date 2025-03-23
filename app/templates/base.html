@@ -18,6 +18,68 @@
             --footer-height: 60px;
         }
 
+        /* 深色主题变量 */
+        [data-theme="dark"] {
+            --primary-color: #8A7EF8;     /* 更亮的紫色 */
+            --secondary-color: #C8A9FF;   /* 更亮的淡紫色 */
+            --accent-color: #FFDE59;      /* 保持原亮黄色 */
+            --background-color: #121224;  /* 稍深的背景色 */
+            --text-color: #EEEEEE;        /* 更亮的文字颜色 */
+            --border-color: #444466;      /* 更亮的边框颜色 */
+            --code-background: #1E1E36;   /* 代码块背景色 */
+            --input-background: #1E1E36;  /* 输入框背景色 */
+        }
+
+        [data-theme="dark"] body {
+            background: linear-gradient(120deg, #121224 0%, #1F1F3C 100%);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .container, 
+        [data-theme="dark"] nav, 
+        [data-theme="dark"] .navbar, 
+        [data-theme="dark"] footer {
+            background: rgba(18, 18, 36, 0.95);
+            border-color: rgba(68, 68, 102, 0.22);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .nav-link,
+        [data-theme="dark"] .footer-link {
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .nav-link:hover,
+        [data-theme="dark"] .footer-link:hover {
+            color: var(--secondary-color);
+        }
+
+        [data-theme="dark"] textarea,
+        [data-theme="dark"] input,
+        [data-theme="dark"] select {
+            background-color: var(--input-background);
+            color: var(--text-color);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] pre,
+        [data-theme="dark"] code {
+            background-color: var(--code-background);
+        }
+
+        [data-theme="dark"] .btn-secondary {
+            background-color: #2D2D4D;
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .btn-secondary:hover {
+            background-color: #3D3D6D;
+        }
+
+        [data-theme="dark"] .toast {
+            background: rgba(30, 30, 54, 0.95);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -297,21 +359,182 @@
         .btn-secondary:hover {
             background: #d0d0d0;
         }
+
+        /* 主题切换按钮样式 */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            margin-left: 0.5rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(12deg);
+        }
+
+        .theme-icon {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .light-icon {
+            display: block;
+        }
+
+        .dark-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .light-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .dark-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .logo-text {
+            /* 增强深色模式下logo文字的亮度 */
+            background: linear-gradient(135deg, #A18CFF, #E1B9FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        [data-theme="dark"] h1, 
+        [data-theme="dark"] h2, 
+        [data-theme="dark"] h3, 
+        [data-theme="dark"] h4, 
+        [data-theme="dark"] h5, 
+        [data-theme="dark"] h6 {
+            color: var(--secondary-color);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .word-count, 
+        [data-theme="dark"] .views-count, 
+        [data-theme="dark"] .expiration-info {
+            color: #BBBBDD;
+        }
+
+        [data-theme="dark"] .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 10px rgba(138, 126, 248, 0.3);
+        }
+
+        [data-theme="dark"] .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(138, 126, 248, 0.5);
+        }
+
+        [data-theme="dark"] a {
+            color: var(--secondary-color);
+        }
+
+        [data-theme="dark"] hr {
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .container {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* 提高深色模式下图标的可见度 */
+        [data-theme="dark"] .theme-icon,
+        [data-theme="dark"] .btn-text {
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+            color: var(--text-color);
+        }
+
+        /* 优化深色模式下的滚动条 */
+        [data-theme="dark"] ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        [data-theme="dark"] ::-webkit-scrollbar-track {
+            background: #121224;
+        }
+
+        [data-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: #444466;
+            border-radius: 6px;
+        }
+
+        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: #555577;
+        }
+
+        /* 深色模式下输入框的焦点状态 */
+        [data-theme="dark"] input:focus,
+        [data-theme="dark"] textarea:focus,
+        [data-theme="dark"] select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(138, 126, 248, 0.3);
+        }
+
+        /* 增强深色模式下的链接悬停效果 */
+        [data-theme="dark"] a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        /* 深色模式下的表格样式 */
+        [data-theme="dark"] table {
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] th {
+            background-color: rgba(30, 30, 54, 0.7);
+        }
+
+        [data-theme="dark"] tr:nth-child(even) {
+            background-color: rgba(30, 30, 54, 0.3);
+        }
+
+        [data-theme="dark"] tr:hover {
+            background-color: rgba(30, 30, 54, 0.5);
+        }
+
+        /* 优化复选框和单选框 */
+        [data-theme="dark"] input[type="checkbox"],
+        [data-theme="dark"] input[type="radio"] {
+            accent-color: var(--primary-color);
+        }
+
+        /* 如果使用了提示框 */
+        [data-theme="dark"] .tooltip {
+            background-color: var(--input-background);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="/netcut" class="logo">
+            <a href="/" class="logo">
                 <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="logo-img">
                 <span class="logo-text">在线剪贴板</span>
             </a>
             <button class="mobile-menu-btn">☰</button>
             <div class="nav-links">
-                <a href="/netcut" class="nav-link">首页</a>
-                <a href="/netcut/pages/about" class="nav-link">关于</a>
-                <a href="/netcut/pages/help" class="nav-link">帮助</a>
+                <a href="/" class="nav-link">首页</a>
+                <a href="/pages/about" class="nav-link">关于</a>
+                <a href="/pages/help" class="nav-link">帮助</a>
+                <button id="themeToggle" class="theme-toggle nav-link" title="切换主题">
+                    <span class="theme-icon light-icon">🌞</span>
+                    <span class="theme-icon dark-icon">🌙</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -323,9 +546,9 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-links">
-                <a href="/netcut/pages/terms" class="footer-link">服务条款</a>
-                <a href="/netcut/pages/privacy" class="footer-link">隐私政策</a>
-                <a href="/netcut/pages/contact" class="footer-link">联系我们</a>
+                <a href="/pages/terms" class="footer-link">服务条款</a>
+                <a href="/pages/privacy" class="footer-link">隐私政策</a>
+                <a href="/pages/contact" class="footer-link">联系我们</a>
                 <a href="https://github.com/NiceM126/netcut" class="footer-link" target="_blank">GitHub</a>
             </div>
             <div class="copyright">
@@ -360,6 +583,30 @@
                 navLinks.classList.remove('active');
                 menuBtn.textContent = '☰';
             });
+        });
+
+        // 主题切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 先检查本地存储中是否有保存的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // 如果没有保存的偏好，则使用系统偏好
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+
+            // 主题切换按钮事件
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                });
+            }
         });
     </script>
     {% block extra_js %}{% endblock %}

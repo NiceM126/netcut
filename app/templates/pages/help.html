@@ -42,7 +42,7 @@
                 <h3>2. 过期时间</h3>
                 <ul>
                     <li>可选择内容的自动过期时间</li>
-                    <li>支持1小时、1天、7天、30天</li>
+                    <li>支持1分钟、1小时、1天、7天、30天</li>
                     <li>过期后内容将自动删除</li>
                 </ul>
             </div>
@@ -81,7 +81,7 @@
             <ul>
                 <li>📧 发送邮件至：niexiangxing@gmail.com</li>
                 <li>💬 在 <a href="https://github.com/NiceM126/netcut">GitHub</a>上提交 Issue</li>
-                <li>📝 查看我们的<a href="/netcut/pages/terms">服务条款</a>和<a href="/netcut/pages/privacy">隐私政策</a></li>
+                <li>📝 查看我们的<a href="/pages/terms">服务条款</a>和<a href="/pages/privacy">隐私政策</a></li>
             </ul>
         </section>
     </div>
@@ -95,6 +95,10 @@
     min-height: calc(100vh - var(--nav-height) - var(--footer-height));
 }
 
+[data-theme="dark"] .help-page {
+    background: linear-gradient(120deg, #0f0f1e 0%, #1a1a3a 100%);
+}
+
 .help-page .container {
     max-width: 800px;
     margin: 0 auto;
@@ -104,11 +108,22 @@
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
 }
 
+[data-theme="dark"] .help-page .container {
+    background: rgba(18, 18, 36, 0.9);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(68, 68, 102, 0.25);
+}
+
 .help-page h1 {
     text-align: center;
     color: var(--text-color);
     margin-bottom: 2rem;
     font-size: 2rem;
+}
+
+[data-theme="dark"] .help-page h1 {
+    color: var(--secondary-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .help-section {
@@ -127,6 +142,12 @@
     border-bottom: 2px solid var(--border-color);
 }
 
+[data-theme="dark"] .help-section h2 {
+    color: var(--secondary-color);
+    border-bottom: 2px solid rgba(68, 68, 102, 0.5);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
 .help-item {
     margin-bottom: 1.5rem;
 }
@@ -141,10 +162,19 @@
     font-size: 1.2rem;
 }
 
+[data-theme="dark"] .help-item h3 {
+    color: #DDDDFF;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
 .help-item p {
     color: var(--text-color);
     line-height: 1.6;
     margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .help-item p {
+    color: #EEEEEE;
 }
 
 .help-item ul {
@@ -160,11 +190,19 @@
     position: relative;
 }
 
+[data-theme="dark"] .help-item li {
+    color: #DDDDEE;
+}
+
 .help-item li::before {
     content: '•';
     color: var(--primary-color);
     position: absolute;
     left: 0.5rem;
+}
+
+[data-theme="dark"] .help-item li::before {
+    color: var(--secondary-color);
 }
 
 .help-section a {
@@ -175,6 +213,18 @@
 
 .help-section a:hover {
     color: var(--secondary-color);
+}
+
+[data-theme="dark"] .help-section a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    text-decoration-color: rgba(200, 169, 255, 0.3);
+    text-underline-offset: 2px;
+}
+
+[data-theme="dark"] .help-section a:hover {
+    color: #E1B9FF;
+    text-decoration-color: rgba(225, 185, 255, 0.6);
 }
 
 @media (max-width: 768px) {

@@ -54,6 +54,10 @@
     min-height: calc(100vh - var(--nav-height) - var(--footer-height));
 }
 
+[data-theme="dark"] .about-page {
+    background: linear-gradient(120deg, #0f0f1e 0%, #1a1a3a 100%);
+}
+
 .about-page .container {
     max-width: 800px;
     margin: 0 auto;
@@ -63,11 +67,22 @@
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
 }
 
+[data-theme="dark"] .about-page .container {
+    background: rgba(18, 18, 36, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(68, 68, 102, 0.25);
+}
+
 .about-page h1 {
     text-align: center;
     color: var(--text-color);
     margin-bottom: 2rem;
     font-size: 2rem;
+}
+
+[data-theme="dark"] .about-page h1 {
+    color: var(--secondary-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .about-section {
@@ -84,10 +99,21 @@
     font-size: 1.5rem;
 }
 
+[data-theme="dark"] .about-section h2 {
+    color: var(--secondary-color);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(68, 68, 102, 0.5);
+    padding-bottom: 0.5rem;
+}
+
 .about-section p {
     color: var(--text-color);
     line-height: 1.6;
     margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .about-section p {
+    color: #EEEEEE;
 }
 
 .about-section ul {
@@ -103,6 +129,10 @@
     gap: 0.5rem;
 }
 
+[data-theme="dark"] .about-section li {
+    color: #DDDDEE;
+}
+
 .about-section a {
     color: var(--primary-color);
     text-decoration: none;
@@ -111,6 +141,18 @@
 
 .about-section a:hover {
     color: var(--secondary-color);
+}
+
+[data-theme="dark"] .about-section a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    text-decoration-color: rgba(200, 169, 255, 0.3);
+    text-underline-offset: 2px;
+}
+
+[data-theme="dark"] .about-section a:hover {
+    color: #E1B9FF;
+    text-decoration-color: rgba(225, 185, 255, 0.6);
 }
 
 @media (max-width: 768px) {

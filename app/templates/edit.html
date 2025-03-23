@@ -6,7 +6,7 @@
 <div class="container">
     <div class="edit-header">
         <div class="header-left">
-            <a href="/netcut" class="home-link">首页</a>
+            <a href="/" class="home-link">首页</a>
             <span class="divider">|</span>
             <span class="paste-url">
                 <span class="url-label">剪贴板地址：</span>
@@ -15,8 +15,9 @@
             </span>
         </div>
         <div class="header-right">
+            <button id="copyContentBtn" class="btn-primary">复制内容</button>
             <button id="saveBtn" class="btn-primary">保存内容</button>
-            <button id="clearBtn" class="btn-secondary">清空内容</button>
+            <button id="clearBtn" class="btn-primary">清空内容</button>
         </div>
     </div>
 
@@ -98,6 +99,12 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .home-link {
@@ -263,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveBtn = document.getElementById('saveBtn');
     const clearBtn = document.getElementById('clearBtn');
     const copyUrlBtn = document.getElementById('copyUrlBtn');
+    const copyContentBtn = document.getElementById('copyContentBtn');
     const charCount = document.getElementById('charCount');
     const lineCount = document.getElementById('lineCount');
     const toast = document.getElementById('toast');
@@ -321,11 +329,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // 复制内容
+    copyContentBtn.addEventListener('click', function() {
+        const textContent = content.value;
+        if (textContent.trim() === '') {
+            showToast('没有内容可复制', 'error');
+            return;
+        }
+        
+        navigator.clipboard.writeText(textContent).then(() => {
+            showToast('内容已复制到剪贴板');
+        }).catch(err => {
+            console.error('复制失败:', err);
+            showToast('复制失败，请重试', 'error');
+        });
+    });
+
     // 清空内容
     clearBtn.addEventListener('click', function() {
         if (confirm('确定要清空所有内容吗？')) {
-            content.value = '';
-            updateCount();
+            // 获取当前剪贴板名称
+            const pasteName = window.location.pathname.split('/').pop();
+            // 调用删除API
+            fetch(`/${pasteName}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    showToast('内容已清除');
+                    content.value = '';
+                    updateCount();
+                    // 延迟后重定向到首页
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    showToast('清除内容失败，请重试');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('发生错误，请重试');
+            });
         }
     });
 

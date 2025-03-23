@@ -17,6 +17,10 @@
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
 }
 
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3a 100%);
+}
+
 .hero::before {
     content: '';
     position: absolute;
@@ -31,6 +35,10 @@
     pointer-events: none;
 }
 
+[data-theme="dark"] .hero::before {
+    opacity: 0.08;
+}
+
 .hero-content {
     position: relative;
     z-index: 1;
@@ -42,6 +50,12 @@
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.18);
     animation: fadeIn 1s ease-out;
+}
+
+[data-theme="dark"] .hero-content {
+    background: rgba(18, 18, 36, 0.85);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(68, 68, 102, 0.25);
 }
 
 @keyframes fadeIn {
@@ -66,11 +80,25 @@
     font-weight: bold;
 }
 
+[data-theme="dark"] .hero h1 {
+    background: linear-gradient(45deg, #A18CFF, #E1B9FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .hero p {
     font-size: 1.2rem;
     color: var(--text-color);
     margin-bottom: 2rem;
     line-height: 1.6;
+}
+
+[data-theme="dark"] .hero p {
+    color: #EEEEEE;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .create-form {
@@ -113,8 +141,19 @@
     transition: transform 0.3s ease;
 }
 
+[data-theme="dark"] .feature-card {
+    background: rgba(30, 30, 54, 0.7);
+    border: 1px solid rgba(68, 68, 102, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
 .feature-card:hover {
     transform: translateY(-5px);
+}
+
+[data-theme="dark"] .feature-card:hover {
+    background: rgba(40, 40, 70, 0.8);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 .feature-icon {
@@ -127,15 +166,31 @@
     -webkit-text-fill-color: transparent;
 }
 
+[data-theme="dark"] .feature-icon {
+    background: linear-gradient(45deg, #A18CFF, #E1B9FF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .feature-title {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: var(--text-color);
 }
 
+[data-theme="dark"] .feature-title {
+    color: #EEEEEE;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
 .feature-description {
     color: var(--text-color);
     opacity: 0.8;
+}
+
+[data-theme="dark"] .feature-description {
+    color: #BBBBEE;
 }
 
 @media (max-width: 768px) {
@@ -293,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // 跳转到新建的剪贴板页面
-        window.location.href = '/netcut/' + pasteName;
+        window.location.href = '/' + pasteName;
     });
 
     // 输入验证：只允许字母、数字、下划线和短横线
