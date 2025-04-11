@@ -30,9 +30,9 @@ COPY config.py .
 COPY run.py .
 
 # 安装Python依赖
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install gunicorn
-RUN pip install bcrypt
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host pypi.tuna.tsinghua.edu.cn
+RUN pip install gunicorn -i https://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host pypi.tuna.tsinghua.edu.cn
+RUN pip install bcrypt -i https://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host pypi.tuna.tsinghua.edu.cn
 
 # 暴露端口
 EXPOSE 5000
