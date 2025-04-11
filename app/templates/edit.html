@@ -350,11 +350,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirm('确定要清空所有内容吗？')) {
             // 获取当前剪贴板名称
             const pasteName = window.location.pathname.split('/').pop();
+            // 获取CSRF令牌
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             // 调用删除API
             fetch(`/${pasteName}/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
                 },
             })
             .then(response => {
