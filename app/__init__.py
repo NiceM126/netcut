@@ -1,7 +1,13 @@
 from flask import Flask, render_template, jsonify, request, session
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
-from config import Config
+import sys
+import os
+
+# 确保能够正确导入根目录的配置文件
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from config import get_config
+
 from .api.paste_routes import bp as paste_bp
 from .api.page_routes import bp as page_bp
 from dotenv import find_dotenv, load_dotenv
@@ -11,7 +17,7 @@ from datetime import datetime
 # 初始化 CSRF 保护
 csrf = CSRFProtect()
 
-def create_app(config_class=Config):
+def create_app(config_class=None):
     """应用工厂函数"""
     app = Flask(__name__, static_url_path='/static')
     
@@ -19,13 +25,20 @@ def create_app(config_class=Config):
     load_dotenv(find_dotenv('.env'))
     
     # 加载配置
+    if config_class is None:
+        config_class = get_config()
+    
     app.config.from_object(config_class)
     
-    # 开启调试模式
-    app.config['DEBUG'] = True
+    # 检查是否在生产环境
+    is_production = not app.config.get('DEBUG', False)
+    
+    # 如果在生产环境，确保安全设置
+    if is_production:
+        app.config['SESSION_COOKIE_SECURE'] = True
+        app.config['SESSION_COOKIE_HTTPONLY'] = True
     
     # 注册蓝图
-
     app.register_blueprint(page_bp, url_prefix='/pages')
     app.register_blueprint(paste_bp, url_prefix='/')
 
@@ -40,7 +53,29 @@ def create_app(config_class=Config):
     # 初始化扩展
     CORS(app)
     csrf.init_app(app)
+    
+    # 排除特定路由的CSRF保护
+    csrf.exempt("paste.delete_paste")
+    
     init_extensions(app)
+    
+    # 添加安全响应头
+    def add_security_headers(response):
+        # 防止MIME类型嗅探攻击
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        # 替代Expires使用Cache-Control
+        if 'Expires' in response.headers:
+            del response.headers['Expires']
+        # 设置缓存控制
+        if 'Cache-Control' not in response.headers:
+            response.headers['Cache-Control'] = 'no-store, max-age=0'
+        # 使用CSP替代X-Frame-Options
+        if 'X-Frame-Options' in response.headers:
+            del response.headers['X-Frame-Options']
+        response.headers['Content-Security-Policy'] = "frame-ancestors 'self'"
+        return response
+    
+    app.after_request(add_security_headers)
     
     # 初始化 Redis 或使用内存存储
     try:
@@ -96,13 +131,12 @@ def create_app(config_class=Config):
         app.db = DictDB()
     
     # 注册错误处理
-    @app.errorhandler(404)
     def not_found_error(error):
         if request.path.startswith('/api/'):
             return jsonify({'error': '接口未找到'}), 404
         return render_template('error.html', error='页面未找到'), 404
+    app.errorhandler(404)(not_found_error)
         
-    @app.errorhandler(500)
     def internal_error(error):
         import traceback
         error_info = traceback.format_exc()
@@ -112,13 +146,23 @@ def create_app(config_class=Config):
             'details': str(error),
             'traceback': error_info
         }), 500
+    app.errorhandler(500)(internal_error)
     
-    @app.before_request
+    # 使用装饰器前先定义函数，然后再用装饰器注册
     def set_cookie_path():
         session.permanent = True
         app.config.update(
             SESSION_COOKIE_PATH = '/',
-            SESSION_COOKIE_NAME = 'netcut_session'
+            SESSION_COOKIE_NAME = 'netcut_session',
+            SESSION_COOKIE_SECURE = True,  # 只在HTTPS连接上发送cookie
+            SESSION_COOKIE_HTTPONLY = True,  # 防止JavaScript访问Cookie
+            SESSION_COOKIE_SAMESITE = 'Lax',  # 限制跨站请求时发送Cookie
+            PERMANENT_SESSION_LIFETIME = 86400 * 30  # 30天，以秒为单位
         )
+        # 确保应用识别到HTTPS
+        if request.headers.get('X-Forwarded-Proto') == 'https':
+            request.environ['HTTPS'] = 'on'
+    
+    app.before_request(set_cookie_path)
     
     return app
