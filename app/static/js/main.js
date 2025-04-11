@@ -53,35 +53,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
-function clearPasteContent(pasteId) {
-
-    fetch(`/${pasteId}/delete`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
-        if (response.ok) {
-            showToast('内容已清除', 'success');
-            // 清除页面上的内容显示
-            document.getElementById('content').value = '';
-            // 延迟后重定向到首页
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 1500);
-        } else {
-            showToast('清除内容失败', 'error');
-        }
-    })
-    .catch(error => {
-        showToast('清除内容失败', 'error');
-    });
-}
-
-// 绑定清除按钮的点击事件
-document.getElementById('clearBtn').addEventListener('click', function() {
-    const pasteId = document.getElementById('paste-id').value; // 获取剪贴板ID
-    clearPasteContent(pasteId);
-});
