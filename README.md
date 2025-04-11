@@ -68,6 +68,7 @@ netcut/
 ├── redis.conf                # redis参考配置
 ├── requirements.txt          # Python依赖
 ├── run.py                    # 应用入口
+├── sources.list              # docker镜像源
 └── README.md                 # 项目说明
 ```
 
