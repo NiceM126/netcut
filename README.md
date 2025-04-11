@@ -64,7 +64,8 @@ netcut/
 ├── config.py                 # 配置文件
 ├── docker-compose.yml        # Docker编排配置
 ├── Dockerfile                # Docker构建文件
-├── nginx.conf                # Nginx参考配置配置
+├── nginx.conf                # Nginx参考配置
+├── redis.conf                # redis参考配置
 ├── requirements.txt          # Python依赖
 ├── run.py                    # 应用入口
 └── README.md                 # 项目说明
