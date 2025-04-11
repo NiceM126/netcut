@@ -203,6 +203,11 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+[data-theme="dark"] .section-block {
+    background: rgba(30, 30, 54, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
 .section-block:last-child {
     margin-bottom: 0;
 }
@@ -250,14 +255,14 @@
 }
 
 .contact-info {
-    background: var(--bg-light);
+    background: #f8f9fa;
     padding: 1.5rem;
     border-radius: 8px;
     margin-top: 1rem;
 }
 
-.contact-info p {
-    margin: 0.5rem 0;
+[data-theme="dark"] .contact-info {
+    background: rgba(40, 40, 70, 0.5);
 }
 
 @media (max-width: 768px) {
