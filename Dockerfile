@@ -10,9 +10,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     FLASK_APP=run.py \
     FLASK_ENV=production
 
+# 设置为国内源
+ADD sources.list /etc/apt/
+RUN cat /etc/apt/sources.list
+RUN apt-get clean
+RUN apt-get update
+
 # 安装系统依赖
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
         build-essential \
         curl \
     && rm -rf /var/lib/apt/lists/*
